@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"clase.java.pkg2"},{"l":"clase.java.pkg2.personajes"}];updateSearchResults();
