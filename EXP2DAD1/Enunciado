@@ -1,0 +1,45 @@
+====================================
+GESTIÓN DE CONGRESOS UNIVERSITARIOS
+====================================
+
+	Una organización académica necesita un sistema distribuido para centralizar la administración de sus congresos. Se requiere desarrollar una solución Cliente-Servidor robusta que permita a los administrativos operar desde diferentes terminales.
+
+
+	Especificaciones Funcionales:
+
+		El sistema debe gestionar entidades de tipo "Congreso", las cuales constan de una descripción y una fecha de celebración.
+
+
+		Debe implementar un servicio remoto que ofrezca las siguientes capacidades:
+
+		
+		1. Registrar Congreso: Permite dar de alta un nuevo evento.
+		
+			Nota: El sistema debe asignar automáticamente un identificador único a cada congreso (formato C1, C2, etc.) para garantizar la integridad de los datos. El usuario no elige el ID.
+		
+		2. Consultar Congreso: Permite visualizar todos los datos de un congreso a partir de su identificador.
+		
+		3. Modificar Congreso: Permite actualizar la descripción y fecha de un congreso existente dado su identificador.
+		
+		4. Eliminar Congreso: Permite borrar un congreso del sistema mediante su identificador.
+		
+			Requisitos de Implementación:
+		
+			- Arquitectura: Debe implementar el patrón Cliente-Servidor utilizando Java RMI.
+		
+		
+			- Estructura: El código fuente debe estar organizado lógicamente en dos paquetes: edu.ucam.servidor y edu.ucam.cliente.
+		
+		
+		
+			- Persistencia: Los datos deben almacenarse en la memoria del servidor utilizando una estructura de datos eficiente para el acceso por clave (ID).
+		
+		
+			- Interfaz de Usuario: El cliente debe ser una aplicación de consola que presente un menú interactivo y cíclico, capaz de manejar errores de entrada (validación de tipos de datos) sin finalizar la ejecución abruptamente.
+			
+			
+			
+	
+	
+	
+	
