@@ -1,0 +1,77 @@
+===============================================
+SISTEMA DE CONTROL DE ACTIVOS (JURASSIC WORLD)
+===============================================
+
+
+El parque Jurassic World necesita actualizar su sistema de seguimiento de dinosaurios. Se requiere una aplicación distribuida que permita a los científicos (Cliente) conectarse al servidor central del laboratorio (Servidor) para gestionar la base de datos de los animales clonados.
+
+El sistema debe dividirse obligatoriamente en dos paquetes: "edu.ucam.jurassic.servidor" y "edu.ucam.jurassic.cliente".
+
+
+
+
+
+Modelo de Datos (Clase Dinosaurio):
+
+Debe implementar una clase que represente al animal.
+
+Atributos:
+
+	id (String): Código único generado por el sistema.
+	
+	nombre (String): Ej. "Blue", "Rexy".
+	
+	especie (String): Ej. "Velociraptor", "T-Rex".
+	
+	nivelPeligrosidad (String): Ej. "Alto", "Medio", "Bajo".
+
+
+
+Requisito Técnico: Recuerda que para que este objeto pueda "viajar" desde el servidor hasta el cliente, debe cumplir una condición específica en su declaración (implements...) .
+
+
+
+
+
+
+El Servidor (Laboratorio Central):
+
+El servidor gestionará la persistencia de los datos en memoria (volátil).
+
+	Almacenamiento: Utilice una Hashtable para guardar los dinosaurios.
+	
+	Generación de IDs: El cliente NO escribe el ID. El servidor debe tener un contador interno que genere IDs correlativos automáticamente (ej: "D1", "D2", "D3"...) cada vez que se crea un dinosaurio .
+	
+	Interfaz Remota: Debe definir los métodos para:
+	
+		- Incubar (Alta): Recibe los datos, genera el ID, guarda el dinosaurio y devuelve confirmación.
+		
+		- Localizar (Consulta): Busca por ID y devuelve los datos del dinosaurio (o mensaje de error).
+		
+		- Trasladar (Modificar): Actualiza los datos de un dinosaurio existente (especie, nombre, peligrosidad).
+		
+		- Darse de baja (Eliminar): Elimina el registro de un dinosaurio (por fallecimiento o fuga).
+		
+		
+		
+		
+		
+El Cliente (Tablet de Control):
+
+Debe ser una aplicación de consola con un bucle infinito que presente el siguiente menú :
+
+	1. Incubar nuevo especimen (Pide datos -> Muestra ID generado).
+	
+	2. Consultar estado (Pide ID -> Muestra toString).
+	
+	3. Registrar baja (Eliminar por ID).
+	
+	4. Actualizar datos (Modificar por ID).
+	
+	5. Salir del sistema.
+
+
+Nota de Implementación: El cliente debe gestionar la entrada de datos de forma robusta, evitando los errores de salto de línea del Scanner al mezclar números y texto .		
+
+
+
