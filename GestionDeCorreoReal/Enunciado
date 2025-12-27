@@ -1,0 +1,53 @@
+==================================================
+EJERCICIO PRÁCTICO: GESTIÓN DE CORREO REAL (RMI)
+==================================================
+
+
+Objetivo: Desarrollar una aplicación distribuida Cliente-Servidor utilizando Java RMI para gestionar la recepción de cartas a los Reyes Magos.
+
+
+
+Especificaciones del Sistema:
+
+Se requiere implementar un sistema dividido en dos paquetes (Cliente y Servidor)  que permita realizar las operaciones básicas de gestión (CRUD) sobre las cartas enviadas por los niños.
+
+
+
+	1. Definición de Datos: Debe existir una clase que represente la Carta. Esta clase deberá almacenar, al menos: un identificador único, el nombre del niño, el regalo solicitado y la fecha de envío . Recuerde que esta clase debe ser capaz de viajar por la red.
+	
+	
+	
+	2. Funcionalidad del Servidor: El servidor será el encargado de almacenar la información.
+	
+		- Debe definir una Interfaz Remota con los métodos necesarios para dar de alta, baja, modificación y consulta de cartas .
+	
+		- La implementación del servidor debe gestionar las cartas utilizando una estructura de datos en memoria (ej. Hashtable).
+	
+	
+		- Gestión de IDs: El sistema debe generar automáticamente un código único para cada carta recibida (ej: "R1", "R2"...) .
+	
+		- El servidor debe quedar a la espera de conexiones en el puerto estándar de RMI.
+	
+	
+	
+	3. Funcionalidad del Cliente: El cliente consistirá en una aplicación de consola que presente un menú interactivo . El usuario podrá:
+	
+		- Enviar carta: Se pedirán los datos necesarios y el servidor devolverá el ID asignado.
+	
+		- Consultar carta: Se buscará por ID.
+	
+		- Eliminar carta: Se borrará por ID.
+	
+		- Modificar carta: Se actualizará el contenido de una carta existente dado su ID.
+	
+		- Salir.
+	
+	
+	Requisitos Técnicos Obligatorios:
+	
+		- Configuración correcta del archivo module-info.java para permitir la exportación y requerimiento del módulo RMI .
+	
+		- Manejo adecuado de las excepciones propias de la comunicación remota (RemoteException).
+	
+	
+		- El servidor debe heredar de la clase necesaria para ser exportable como objeto remoto.
