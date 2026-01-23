@@ -1,0 +1,110 @@
+ENUNCIADO:
+
+El equipo de desarrollo de nuestra empresa está trabajando en un sistema de gestión de fichaje de empleados
+al que se pueden conectar los clientes mediante el uso de Sockets. 
+
+El jefe de equipo nos ha pedido que implementemos, dentro del servidor, el hilo de ejecución que gestiona
+los comandos recibidos.
+
+
+En concreto se trata de implementar solamente la clase HiloGestionFichaje para que al recibir el comando y
+procesarlo devuelva el resultado correspondiente.
+
+
+Requisitos técnicos de la clase:
+
+- Esta clase tiene un atributo, Socket, que representa el canal de comunicación con el cliente.
+
+- Habrá que crear los buffers correspondientes y leer/escribir de los mismos.
+
+- Para cada envío el sistema debe comprobar si el empleado ya existe.
+
+- Para simplificar la gestión, el listado de empleados se podrá almacenar como atributo en la clase implementada. 
+  Se recomienda la creación de una clase Empleado que almacene la información del mismo.
+  
+
+
+
+
+Los comandos que implementará el servidor serán los siguientes:
+
+1. ALTAEMPLEADO
+
+Formato: ALTAEMPLEADO idEmpleado nombreCompleto
+
+Ejemplo: ALTAEMPLEADO 1234 Juan Martinez
+
+Respuesta OK: → Ok. Empleado insertado
+
+Respuesta Error: → Error. El empleado ya existe
+
+---------------------------------------------------------------------------------------|
+
+2. ENTRADA
+
+Formato: ENTRADA idEmpleado
+
+Ejemplo: ENTRADA 1234
+
+Respuesta OK: → Ok. Entrada registrada. 2025-11-11T17:05
+
+Respuesta Error: → Error. El empleado ya ha registrado la entrada (No se puede fichar entrada si ya hay entrada abierta).
+
+---------------------------------------------------------------------------------------|
+
+3. SALIDA
+
+Formato: SALIDA idEmpleado
+
+Ejemplo: SALIDA 1234
+
+Respuesta OK: → Ok. Salida registrada. 2025-11-11T19:05
+
+Respuesta Error: → Error. El empleado no tiene registrada entrada (No se puede fichar salida si no hay entrada abierta).
+
+---------------------------------------------------------------------------------------|
+
+4. HORAS
+
+Formato: HORAS idEmpleado
+
+Ejemplo: HORAS 1234
+
+Respuesta OK: → Ok. Juan tiene trabajadas 2 horas.
+
+Nota: Devuelve el total de horas trabajadas acumuladas por el empleado.
+
+---------------------------------------------------------------------------------------|
+
+5. ESTADO
+
+Formato: ESTADO idEmpleado
+
+Ejemplo: ESTADO 1234
+
+Respuesta (Si hay entrada abierta): → El empleado ha registrado entrada: 2025-11-11T17:05
+
+Respuesta (Si NO hay entrada): → El empleado no ha registrado entrada
+  
+  
+  
+  
+  
+  
+  
+  
+Se supone que existe una clase GestionFechas que tiene los siguientes métodos estáticos:
+
+.getHoraActual() -> Devuelve un objeto de la clase Timestamp con la fecha y hora actual.
+
+.getHorasEntre(Timestamp fechaInicio, Timestamp fechaFin) -> Devuelve un número con un decimal (float) que representa las horas que han pasado entre las dos fechas que se pasan como parámetro.
+
+.getTexto(Timestamp fecha) -> Devuelve la cadena de texto que representa a la fecha que recibe por parámetro.  
+  
+  
+  
+  
+  
+  
+  
+  
