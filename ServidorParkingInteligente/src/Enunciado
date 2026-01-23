@@ -1,0 +1,61 @@
+Ejercicio Práctico: Servidor de Parking Inteligente
+
+
+Contexto: Una empresa de parkings automatizados nos ha pedido un servidor para gestionar la entrada y salida de vehículos en un aparcamiento céntrico. Los sensores de las barreras se comunican con el servidor mediante Sockets.
+
+Tarea: Implementar la clase HiloParking (extends Thread) que atienda a cada barrera (cliente).
+
+
+
+Requisitos Técnicos:
+
+Debes mantener un registro de los coches que están DENTRO actualmente.
+
+Debes mantener una variable global con la Recaudación Total del día (dinero acumulado de todos los coches que han salido).
+
+Usa una clase Coche (créala tú) que guarde: Matrícula y Hora de Entrada.
+
+IMPORTANTE: Usa la clase auxiliar GestorTarifas (te la doy abajo) para los cálculos.
+
+
+
+Comando,Formato,Acción / Reglas de Negocio,Respuesta Servidor
+ENTRAR,ENTRAR [matricula],"Registra la entrada del vehículo. Error: Si el coche ya está dentro, no puede volver a entrar.",OK: → Barrera abierta. [Hora]Error: → Error. El coche ya está dentro.
+SALIR,SALIR [matricula],"Registra la salida. Calcula el precio, cobra y elimina al coche de la lista de ""dentro"". Suma el dinero a la recaudación total.Error: Si el coche no está dentro, no puede salir.",OK: → Salida correcta. Importe: [X]€Error: → Error. El coche no ha entrado.
+VER,VER [matricula],Consulta el estado de un coche.Muestra a qué hora entró.,OK: → El coche entró a las [Hora]Error: → El coche no está en el parking.
+CAJA,CAJA,(Solo para el administrador). Muestra cuánto dinero ha ganado el parking hoy en total.,OK: → Recaudación total: [X]€
+
+
+
+
+
+Clases Auxiliares (Copia y pega esto en tu proyecto)
+
+Necesitas esta clase para que el código funcione (es el equivalente a GestionFechas):
+package simulacroParking;
+
+import java.sql.Timestamp;
+
+public class GestorTarifas {
+
+    // Devuelve la hora actual
+    public static Timestamp getHoraActual() {
+        return new Timestamp(System.currentTimeMillis());
+    }
+
+    // Calcula el precio: 0.05 euros por segundo (para que veas subir el precio rápido al probar)
+    public static float calcularImporte(Timestamp entrada, Timestamp salida) {
+        long diferenciaMilis = salida.getTime() - entrada.getTime();
+        long segundos = diferenciaMilis / 1000;
+        return segundos * 0.05f; // 5 céntimos por segundo
+    }
+    
+    // Formatea la fecha a texto
+    public static String getTexto(Timestamp fecha) {
+        return fecha.toString();
+    }
+}
+
+
+
+
