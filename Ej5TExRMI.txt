@@ -1,0 +1,34 @@
+Ejercicio 5: 
+
+
+Tu implementación del servidor tiene este código. Dos clientes (Cliente A y Cliente B) llaman al método incrementar() casi al mismo tiempo (diferencia de 1 milisegundo). 
+El contador empieza en 0. ¿Qué valor tendrá el contador al final? ¿Es fiable? Justifica tu respuesta.
+
+
+public class ContadorImpl extends UnicastRemoteObject implements IContador {
+    
+    private int contador = 0; // Variable global de la clase
+
+    public ContadorImpl() throws RemoteException { super(); }
+
+    @Override
+    public int incrementar() throws RemoteException {
+        contador = contador + 1;
+        // Simulamos un retardo pequeño
+        try { Thread.sleep(10); } catch (Exception e) {} 
+        return contador;
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------|
+
+SOLUCIÓN:
+
+
+El valor final NO es fiable (seguramente será menor que el total de llamadas, e.g., si llamaron 2 veces, podría quedarse en 1).
+
+RMI es multihilo. Si dos clientes llaman a la vez, el servidor crea dos hilos que entran al método incrementar() simultáneamente. Como el método NO tiene la palabra synchronized, se produce una Condición de Carrera (Race Condition).
+
+
+// Añadir synchronized para que pasen de uno en uno
+public synchronized int incrementar() throws RemoteException { ... }

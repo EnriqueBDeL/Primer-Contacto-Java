@@ -1,0 +1,30 @@
+Ejercicio 10: 
+
+Situación: Estás escribiendo la dirección para conectar al registro, pero has tenido un despiste al escribir la cadena de texto.
+
+
+Código:
+
+// Fíjate bien en la cadena
+Naming.rebind("localhost:1099/MiServicio", objeto);
+
+
+Consola de Eclipse:
+
+java.net.MalformedURLException: invalid URL scheme: localhost
+    at java.rmi/java.rmi.Naming.parseURL(Naming.java:239)
+    at java.rmi/java.rmi.Naming.rebind(Naming.java:176)
+    at edu.ucam.servidor.ServidorMain.main(ServidorMain.java:20)
+
+Pregunta: El error dice "invalid URL scheme". ¿Qué falta exactamente al principio de la cadena de texto?
+
+-----------------------------------------------------------------------------------------------------------------------------------------------|
+
+SOLUCIÓN: 
+
+A Naming.rebind (o lookup) no le gusta la cadena de texto porque le falta el protocolo.
+
+La URL de RMI debe seguir el formato estándar: rmi://host:puerto/nombre. Si omites el rmi:// (o a veces //), Java no reconoce qué tipo de recurso estás pidiendo.
+
+// Añadir el protocolo al principio
+Naming.rebind("rmi://localhost:1099/MiServicio", objeto);

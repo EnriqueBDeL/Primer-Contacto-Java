@@ -1,0 +1,38 @@
+Ejercicio 4: 
+
+
+Ejecutamos el siguiente main del servidor. ¿Qué ocurrirá al ejecutarlo? 
+
+a) Funciona y muestra "Servidor listo". 
+b) Lanza java.rmi.ConnectException o Connection refused. 
+c) Lanza BindException.
+
+
+public static void main(String[] args) {
+    try {
+        // Nota: NO hay ninguna otra línea de código antes de esta
+        ICalculadora calc = new CalculadoraImpl();
+        
+        Naming.rebind("rmi://localhost:1099/Calculadora", calc);
+        
+        System.out.println("Servidor listo");
+        
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------|
+
+SOLUCIÓN:
+
+
+b) Lanza java.rmi.ConnectException
+
+La instrucción Naming.rebind intenta conectarse al "listín telefónico" (RMI Registry) en el puerto 1099. 
+Como el código no ha ejecutado LocateRegistry.createRegistry(1099) antes (y asumimos que no lo has lanzado por consola), no hay nadie escuchando en ese puerto. 
+El servidor intenta llamar a una puerta donde no vive nadie.
+
+
+LocateRegistry.createRegistry(1099); // ¡Faltaba esto!
+Naming.rebind("rmi://localhost:1099/Calculadora", calc);

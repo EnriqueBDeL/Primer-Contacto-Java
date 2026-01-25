@@ -1,0 +1,31 @@
+Ejercicio 2: 
+
+
+El servidor ha registrado correctamente un objeto de tipo CalculadoraImpl (que implementa ICalculadora) en el registro RMI. 
+El cliente ejecuta el siguiente código. ¿Qué excepción saltará en la línea 5 y por qué?
+
+
+// Código Cliente
+try {
+    // Línea 4
+    Object obj = Naming.lookup("rmi://localhost:1099/MiCalculadora");
+    // Línea 5
+    CalculadoraImpl calc = (CalculadoraImpl) obj; 
+    
+    System.out.println(calc.suma(2, 2));
+} catch (Exception e) {
+    e.printStackTrace();
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------|
+
+SOLUCIÓN:
+
+
+Cuando haces Naming.lookup, RMI no te devuelve el objeto original (CalculadoraImpl), sino un Stub (Proxy). 
+Este Stub implementa la Interfaz (ICalculadora), pero NO es una instancia de la clase concreta. 
+Nunca puedes hacer casting a la clase de implementación en el cliente, porque el cliente no tiene (o no debería usar) ese código.
+
+
+// Correcto: Casting a la INTERFAZ
+ICalculadora calc = (ICalculadora) obj;

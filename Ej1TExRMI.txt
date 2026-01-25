@@ -1,0 +1,23 @@
+Ejercicio 1: 
+
+
+Analiza el siguiente código. ¿Compila correctamente? Si no, ¿qué dos cosas faltan estrictamente para que sea una interfaz RMI válida?
+
+
+package edu.ucam.examen;
+
+// Código A
+public interface ServicioDatos {
+    public String obtenerDatos(int id);
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------|
+
+SOLUCIÓN:
+
+RMI necesita la interfaz Remote para identificar qué objetos se pueden exportar, y RemoteException es obligatoria porque las llamadas de red pueden fallar inesperadamente.
+
+
+public interface ServicioDatos extends java.rmi.Remote { // 1. Extends
+    public String obtenerDatos(int id) throws java.rmi.RemoteException; // 2. Throws
+}

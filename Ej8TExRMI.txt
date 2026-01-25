@@ -1,0 +1,35 @@
+Ejercicio 8: 
+
+Situación: Estás probando tu servidor. Lo ejecutas y funciona bien ("Servidor listo"). Haces un cambio en el código, le vuelves a dar al botón de Run (sin parar el anterior en la consola roja) y de repente sale esto.
+
+
+Código Servidor:
+
+LocateRegistry.createRegistry(1099);
+Naming.rebind("rmi://localhost:1099/Servicio", objetoRemoto);
+
+
+
+Consola de Eclipse (Servidor):
+
+java.rmi.server.ExportException: Port already in use: 1099; nested exception is: 
+    java.net.BindException: Address already in use: JVM_Bind
+    at java.rmi/sun.rmi.transport.tcp.TCPTransport.listen(TCPTransport.java:335)
+    at java.rmi/sun.rmi.transport.tcp.TCPEndpoint.newServerSocket(TCPEndpoint.java:670)
+    at java.rmi/sun.rmi.server.UnicastServerRef.exportObject(UnicastServerRef.java:236)
+    ...
+Caused by: java.net.BindException: Address already in use: JVM_Bind
+    at java.base/java.net.DualStackPlainSocketImpl.socketBind(Native Method)
+    …
+
+Pregunta: ¿Qué significa "Port already in use" y cómo se soluciona esto en Eclipse?
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------|
+
+SOLUCIÓN: 
+
+Intentas abrir el puerto 1099, pero ya está ocupado.
+
+Un puerto TCP solo puede ser ocupado por un único proceso a la vez. Este error ocurre porque ya tienes una instancia del servidor ejecutándose en 
+segundo plano (la anterior) y has intentado lanzar una nueva sin detener la vieja.

@@ -1,0 +1,35 @@
+Ejercicio 9:
+
+
+
+Situación: El alumno ha copiado el código del Servidor al Cliente. Como sabe que el objeto real es GestionImpl, intenta usarlo directamente en el cliente.
+
+Código Cliente:
+
+Object obj = Naming.lookup("rmi://localhost:1099/Servicio");
+GestionImpl gestion = (GestionImpl) obj; // Línea del error
+gestion.matricular("Pepe");
+
+
+Consola de Eclipse (Cliente):
+
+
+java.lang.ClassCastException: class com.sun.proxy.$Proxy0 cannot be cast to class edu.ucam.servidor.GestionImpl
+    at edu.ucam.cliente.ClienteMain.main(ClienteMain.java:15)
+
+
+Pregunta: ¿Por qué dice que no puede convertir el Proxy a GestionImpl? ¿Cómo debería declararse la variable gestion para que funcione?
+
+-----------------------------------------------------------------------------------------------------------------------------------------------|
+
+SOLUCIÓN: 
+
+Intentas tratar al objeto remoto como si fuera tu clase local GestionImpl, pero RMI te ha dado un "doble" (un Proxy).
+
+El método Naming.lookup devuelve una referencia remota (Stub/Proxy). 
+Este objeto Proxy implementa la Interfaz (IContrato o IGestion), pero NO es una instancia de la clase implementadora (GestionImpl). 
+El cliente desconoce totalmente el código interno del servidor.
+
+// MAL: GestionImpl gestion = (GestionImpl) obj;
+// BIEN:
+IGestion gestion = (IGestion) obj;

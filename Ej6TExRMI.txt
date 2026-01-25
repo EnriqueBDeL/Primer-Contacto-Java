@@ -1,0 +1,45 @@
+Ejercicio 6: 
+
+
+Situación: Tienes un método en el servidor que devuelve un objeto Factura. El código compila perfectamente, pero al ejecutar el cliente y llamar al método, salta esto.
+
+
+Código del Dominio:
+
+
+public class Factura {
+    private int id;
+    private double importe;
+    public Factura(int id, double imp) { this.id = id; this.importe = imp; }
+    // Getters y Setters...
+}
+
+
+
+Consola de Eclipse (Cliente):
+
+
+java.rmi.UnmarshalException: Error unmarshaling return header; nested exception is: 
+    java.io.WriteAbortedException: writing aborted; java.io.NotSerializableException: edu.ucam.domain.Factura
+    at java.rmi/sun.rmi.transport.StreamRemoteCall.executeCall(StreamRemoteCall.java:254)
+    at java.rmi/sun.rmi.server.UnicastRef.invoke(UnicastRef.java:165)
+    at ...
+Caused by: java.io.NotSerializableException: edu.ucam.domain.Factura
+    at java.base/java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1185)
+    at java.base/java.io.ObjectOutputStream.writeObject(ObjectOutputStream.java:349)
+    …
+
+
+Pregunta: ¿Qué le falta a la clase Factura y por qué RMI lanza este error específico?
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------|
+
+SOLUCIÓN: 
+
+El objeto Factura intenta viajar por la red (del servidor al cliente), pero Java no sabe cómo convertirlo a ceros y unos (bytes).
+
+
+En RMI, los objetos de dominio que se retornan o se pasan como parámetros se pasan por valor. 
+Esto implica que deben ser serializados. Si la clase no implementa la interfaz Serializable, la máquina virtual aborta la transmisión.
+

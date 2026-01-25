@@ -1,0 +1,33 @@
+Ejercicio 3: 
+
+
+Tenemos esta clase de dominio y un método remoto que la devuelve. 
+El código compila perfectamente. Al ejecutar el cliente y llamar a obtenerAlumno(), salta una excepción larguísima. 
+¿Cuál es la excepción principal (la causa raíz) y cómo se arregla?
+
+
+// Clase de Dominio
+public class Alumno {
+    private String nombre;
+    private int edad;
+    
+    public Alumno(String n, int e) { this.nombre = n; this.edad = e; }
+}
+
+// Método en la implementación del servidor
+public Alumno obtenerAlumno() throws RemoteException {
+    return new Alumno("Pepe", 22);
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------|
+
+SOLUCIÓN:
+
+En RMI, cuando un método devuelve un objeto que no es remoto (como Alumno), este se pasa por valor (se envía una copia). 
+Para viajar por la red, Java necesita convertir el objeto a bytes (serializarlo). 
+Como la clase Alumno no implementa Serializable, Java no sabe cómo enviarla y falla.
+
+
+
+import java.io.Serializable;
+public class Alumno implements Serializable { ... }

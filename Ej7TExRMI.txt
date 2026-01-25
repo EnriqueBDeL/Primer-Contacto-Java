@@ -1,0 +1,32 @@
+Ejercicio 7: 
+
+
+Situación: El código del cliente está perfecto (URL bien escrita, puertos bien...). Sin embargo, nada más darle al "Run" en el Cliente, aparece esto inmediatamente.
+
+
+Código Cliente:
+
+IGestion gestion = (IGestion) Naming.lookup("rmi://localhost:1099/ServicioUniversidad");
+
+
+
+Consola de Eclipse (Cliente):
+
+java.rmi.ConnectException: Connection refused to host: localhost; nested exception is: 
+    java.net.ConnectException: Connection refused: connect
+    at java.rmi/sun.rmi.transport.tcp.TCPEndpoint.newSocket(TCPEndpoint.java:623)
+    at java.rmi/sun.rmi.transport.tcp.TCPChannel.createConnection(TCPChannel.java:209)
+    at java.rmi/sun.rmi.server.UnicastRef.newCall(UnicastRef.java:343)
+    at java.rmi/java.rmi.Naming.lookup(Naming.java:101)
+    …
+
+
+Pregunta: Si el código del cliente está bien, ¿qué se le ha olvidado hacer al programador antes de ejecutar el cliente?
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------|
+
+SOLUCIÓN: 
+
+Esta excepción ocurre cuando el cliente intenta conectar a una IP y Puerto correctos, pero no hay ningún proceso escuchando en ese puerto. 
+Significa que el Servidor no se ha iniciado antes que el Cliente.
