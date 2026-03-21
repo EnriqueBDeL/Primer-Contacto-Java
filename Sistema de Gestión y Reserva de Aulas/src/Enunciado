@@ -1,0 +1,64 @@
+Examen de Práctica: Sistema de Gestión y Reserva de Aulas
+
+
+Se desea implementar una aplicación web en Java (usando Servlets, JSP y Custom Tags) para gestionar las aulas de un campus universitario. 
+La aplicación debe permitir registrar nuevas aulas, darlas de baja, y gestionar si están ocupadas (reservadas) o libres.
+
+Debes desarrollar los siguientes componentes:
+
+
+1. Clase de Dominio
+
+Crea una clase Aula dentro del paquete edu.ucam.domain que contenga, al menos, los siguientes atributos:
+
+id (String)
+
+nombre (String, ej: "Aula Magna", "Laboratorio 3")
+
+capacidad (int, número de alumnos)
+
+tieneProyector (boolean)
+
+reservada (boolean, por defecto debe ser false)
+
+(Asegúrate de incluir su constructor y sus getters/setters correspondientes).
+
+
+2. Inicialización de la Aplicación (Listener)
+
+Crea un ServletContextListener llamado InicializarAulasListener que se ejecute al arrancar la aplicación.
+
+Debe crear una estructura de datos adecuada (por ejemplo, un Hashtable) para almacenar las aulas.
+
+Debe insertar al menos dos aulas por defecto en esa estructura.
+
+Debe guardar esta estructura en el contexto de la aplicación para que sea accesible desde cualquier parte.
+
+
+
+
+3. Servlets de Gestión
+
+Debes crear tres servlets para manejar la lógica de negocio:
+
+ServletAltaAula: Recibirá los datos de un formulario (ID, Nombre, Capacidad, y si tiene proyector). Comprobará si el aula ya existe; si no existe, la creará y la añadirá a la colección del contexto. Finalmente, redirigirá de vuelta a la página principal.
+
+ServletBorrarAula: Recibirá un ID por parámetro y eliminará el aula correspondiente de la colección.
+
+ServletAlternarReserva: Recibirá un ID por parámetro y cambiará el estado de reserva del aula (si estaba libre pasará a reservada, y si estaba reservada pasará a libre).
+
+
+
+4. Interfaz de Usuario (JSP) y Custom Tags
+
+Crea un archivo index.jsp que contenga:
+
+Un formulario HTML para dar de alta una nueva aula, enviando los datos por POST al ServletAltaAula.
+
+Una Custom Tag (Etiqueta personalizada). Crea la clase Java ListarAulasTag (extendiendo BodyTagSupport) y su correspondiente archivo .tld.
+
+Esta etiqueta debe leer la colección de aulas del contexto y dibujar en la pantalla una lista con los datos de cada aula.
+
+Por cada aula listada, debe imprimir en HTML dos enlaces: uno para "Borrar" (que apunte a ServletBorrarAula) y otro para "Reservar / Liberar" (que apunte a ServletAlternarReserva, cambiando el texto del enlace según el estado actual del aula).
+
+En el index.jsp, utiliza esta etiqueta personalizada para mostrar el listado debajo del formulario.
