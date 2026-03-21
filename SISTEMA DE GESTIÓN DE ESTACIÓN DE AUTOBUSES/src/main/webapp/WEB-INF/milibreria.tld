@@ -1,0 +1,19 @@
+<taglib>
+   
+   
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>1.2</jsp-version>
+    <short-name>Gestion de Flota</short-name>
+    <uri>miflotatags</uri>
+    <description>Etiquetas para listar autobuses</description>	
+
+    <tag>
+      
+        <name>listar</name>
+        <tag-class>edu.ucam.tag.ListarAutobusesTag</tag-class>
+        <body-content>empty</body-content>
+        <info>Imprime los autobuses y sus opciones</info>
+    </tag>
+    
+    
+</taglib>

@@ -1,0 +1,112 @@
+=============================================================================
+EXAMEN DE PRÁCTICA: SISTEMA DE GESTIÓN DE ESTACIÓN DE AUTOBUSES
+=============================================================================
+
+-----------------------------------------------------------------------------
+ANEXO: CÓDIGO AUTOGENERADO (PLANTILLAS)
+-----------------------------------------------------------------------------
+
+1. Plantilla base para un Servlet (HttpServlet)
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@WebServlet("/RutaDelServlet")
+public class NombreServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    public NombreServlet() { super(); }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Tu código aquí
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
+    }
+}
+
+2. Plantilla base para un Listener (ServletContextListener)
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.annotation.WebListener;
+
+@WebListener
+public class NombreListener implements ServletContextListener {
+
+    public NombreListener() {}
+
+    public void contextInitialized(ServletContextEvent sce) { 
+         // Tu código aquí al arrancar la app
+    }
+
+    public void contextDestroyed(ServletContextEvent sce) { }
+}
+
+3. Plantilla base para una Custom Tag (BodyTagSupport)
+import java.io.IOException;
+import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.tagext.BodyTagSupport;
+
+public class NombreTag extends BodyTagSupport {
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public int doStartTag() throws JspException {
+        // Tu código aquí
+        return SKIP_BODY;
+    }
+
+    public int doEndTag() throws JspException {
+        return EVAL_PAGE;
+    }
+}
+
+
+-----------------------------------------------------------------------------
+ENUNCIADO DEL EJERCICIO
+-----------------------------------------------------------------------------
+Se requiere desarrollar una aplicación web en Java para gestionar la flota de 
+una estación de autobuses. La aplicación debe permitir registrar nuevos autobuses, 
+darlos de baja de la flota y cambiar su estado (si están aparcados en la estación 
+o si están en ruta).
+
+Desarrolla los siguientes elementos:
+
+1. LA CLASE DE DOMINIO (Autobus.java)
+Crea la clase 'Autobus' con los siguientes atributos:
+- matricula (String) - Será el identificador único.
+- destino (String) - Ejemplo: "Madrid", "Barcelona".
+- plazas (int) - Capacidad de pasajeros.
+- enRuta (boolean) - Por defecto será false (significa que está en la estación).
+(Nota: Asume que la clase tiene su constructor con matrícula, destino y plazas, 
+y todos sus getters/setters).
+
+2. INICIALIZACIÓN (InicializarEstacionListener.java)
+Crea un Listener que, al arrancar la aplicación, cree un Hashtable para 
+almacenar objetos Autobus (usando la matrícula como clave). Debe insertar al 
+menos un autobús por defecto y guardar la colección en el contexto de la 
+aplicación con el nombre "FLOTA".
+
+3. LÓGICA DE NEGOCIO (Servlets)
+Desarrolla los siguientes Servlets utilizando la plantilla del anexo:
+- ServletAltaAutobus: Recibe por parámetro la matrícula, el destino y las plazas. 
+  Si el autobús no existe en el Hashtable, lo crea y lo guarda. Después, 
+  redirige a index.jsp.
+- ServletBorrarAutobus: Recibe una matrícula por parámetro y elimina el autobús 
+  correspondiente del Hashtable. Redirige a index.jsp.
+- ServletCambiarEstado: Recibe una matrícula por parámetro. Si el autobús está 
+  en la estación (enRuta = false), lo pone en ruta (true). Si estaba en ruta, 
+  lo vuelve a poner en la estación. Redirige a index.jsp.
+
+4. INTERFAZ Y ETIQUETA PERSONALIZADA (ListarAutobusesTag.java y TLD)
+- Crea la clase Java para una Custom Tag que recupere el Hashtable del contexto 
+  y pinte en el HTML (usando pageContext.getOut().print()) una lista con la 
+  matrícula, destino y plazas de cada autobús.
+- Junto a cada autobús listado, debe pintar un enlace HTML para "Borrar" y otro 
+  enlace para "Poner en ruta / Aparcar en estación" dependiendo de su estado actual.
+- Opcional: Escribe brevemente cómo sería la etiqueta <tag> dentro del archivo 
+  .tld para registrar esta clase.
