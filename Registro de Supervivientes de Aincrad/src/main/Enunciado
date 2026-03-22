@@ -1,0 +1,97 @@
+=============================================================================
+EXAMEN DE PRÁCTICA: REGISTRO DE SUPERVIVIENTES DE AINCRAD (SAO)
+=============================================================================
+
+-----------------------------------------------------------------------------
+ANEXO: CÓDIGO AUTOGENERADO (PLANTILLAS)
+-----------------------------------------------------------------------------
+
+1. Plantilla base para un Servlet (HttpServlet)
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@WebServlet("/RutaDelServlet")
+public class NombreServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    public NombreServlet() { super(); }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Tu código aquí
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
+    }
+}
+
+2. Plantilla base para un Listener (ServletContextListener)
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.annotation.WebListener;
+
+@WebListener
+public class NombreListener implements ServletContextListener {
+
+    public NombreListener() {}
+
+    public void contextInitialized(ServletContextEvent sce) { 
+         // Tu código aquí al arrancar la app
+    }
+
+    public void contextDestroyed(ServletContextEvent sce) { }
+}
+
+3. Recordatorio de sintaxis JSP (Scriptlets)
+<% 
+    // Aquí dentro puedes escribir código Java normal (variables, bucles, if...) 
+%>
+<%= variable %> -----------------------------------------------------------------------------
+ENUNCIADO DEL EJERCICIO
+-----------------------------------------------------------------------------
+Se requiere desarrollar una aplicación web en Java para registrar a los jugadores 
+atrapados en Sword Art Online. La aplicación debe permitir registrar nuevos 
+jugadores, eliminarlos del sistema y actualizar su estado vital (Vivo o Muerto). 
+No se permite el uso de Custom Tags; toda la información debe imprimirse usando 
+Scriptlets dentro del JSP.
+
+Desarrolla los siguientes elementos:
+
+1. LA CLASE DE DOMINIO (Jugador.java)
+Crea la clase 'Jugador' con los siguientes atributos:
+- nickname (String) - Será el identificador único.
+- nivel (int) - Nivel actual del jugador.
+- gremio (String) - Nombre del gremio.
+- vivo (boolean) - Por defecto será true (significa que está vivo).
+(Nota: Asume que la clase tiene su constructor con nickname, nivel y gremio, 
+y todos sus getters/setters).
+
+2. INICIALIZACIÓN (InicializarJuegoListener.java)
+Crea un Listener que, al arrancar la aplicación, cree un Hashtable para 
+almacenar objetos Jugador (usando el nickname como clave). Debe insertar al 
+menos dos jugadores por defecto y guardar la colección en el contexto con 
+el nombre "JUGADORES".
+
+3. LÓGICA DE NEGOCIO (Servlets)
+Desarrolla los siguientes Servlets utilizando la plantilla del anexo:
+- ServletAltaJugador: Recibe por parámetro el nickname, el nivel y el gremio. 
+  Si el jugador no existe, lo crea y lo guarda. Redirige a index.jsp.
+- ServletBorrarJugador: Recibe un nickname por parámetro y elimina al jugador 
+  del Hashtable. Redirige a index.jsp.
+- ServletCambiarEstado: Recibe un nickname por parámetro. Alterna el estado 
+  vital del jugador (de vivo a muerto o viceversa). Redirige a index.jsp.
+
+4. INTERFAZ DE USUARIO (index.jsp)
+Crea el archivo index.jsp que contenga:
+- Un formulario HTML para dar de alta a un nuevo jugador.
+- Un bloque de código Java (<% ... %>) que recupere el Hashtable de "JUGADORES".
+- Un bucle que recorra los jugadores y pinte en el HTML su nickname, nivel, 
+  gremio y estado (Vivo/Muerto).
+- Junto a cada jugador, dos enlaces HTML (<a>): uno para "Borrar" y otro para 
+  "Cambiar Estado" (apuntando a sus respectivos servlets con el nickname 
+  como parámetro).
+  
