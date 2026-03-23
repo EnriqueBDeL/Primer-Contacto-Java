@@ -1,0 +1,82 @@
+=============================================================================
+EXAMEN DE PRÁCTICA: COMISIÓN DE SEGURIDAD PÚBLICA DE HÉROES (MHA)
+=============================================================================
+
+-----------------------------------------------------------------------------
+ANEXO: CÓDIGO AUTOGENERADO (PLANTILLAS)
+-----------------------------------------------------------------------------
+1. Plantilla Servlet
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Hashtable; 
+
+@WebServlet("/RutaDelServlet")
+public class NombreServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    public NombreServlet() { super(); }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { doGet(request, response); }
+}
+
+2. Plantilla Listener
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.annotation.WebListener;
+import java.util.Hashtable; 
+
+@WebListener
+public class NombreListener implements ServletContextListener {
+    public NombreListener() {}
+    public void contextInitialized(ServletContextEvent sce) { }
+    public void contextDestroyed(ServletContextEvent sce) { }
+}
+
+3. Plantilla Filter
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
+
+@WebFilter("/RutaAProteger") 
+public class NombreFiltro implements Filter {
+    public NombreFiltro() {}
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException { }
+}
+
+-----------------------------------------------------------------------------
+ENUNCIADO DEL EJERCICIO
+-----------------------------------------------------------------------------
+La Comisión de Seguridad Pública requiere una aplicación web para registrar a los 
+Héroes Profesionales. Por motivos de seguridad, solo las Agencias que hayan 
+iniciado sesión pueden dar de alta a nuevos héroes.
+
+1. LA CLASE DE DOMINIO (Heroe.java)
+Atributos: alias (String, clave), don (String), ranking (int).
+
+2. INICIALIZACIÓN (InicializarComisionListener.java)
+Crea el Hashtable de Héroes en el contexto con el nombre "REGISTRO_HEROES" 
+e inserta a "All Might" y "Endeavor".
+
+3. SISTEMA DE ACCESO (ServletLogin.java)
+Recibe el parámetro "AGENCIA", obtén la sesión HTTP del usuario (request.getSession()) 
+y guarda el nombre de la agencia en la sesión como "AGENCIA_LOGEADA". Redirige a index.jsp.
+
+4. EL FILTRO DE SEGURIDAD (FiltroLicencia.java)
+Mapea el filtro a "/ServletAltaHeroe". 
+Recupera la sesión HTTP y comprueba si existe "AGENCIA_LOGEADA".
+- Si existe: Deja pasar (chain.doFilter).
+- Si NO existe: Redirige a "error_seguridad.jsp".
+
+5. LÓGICA DE REGISTRO (ServletAltaHeroe.java)
+Recibe alias, don y ranking. Añade el héroe al Hashtable del contexto si no 
+existe previamente. Redirige a index.jsp.
