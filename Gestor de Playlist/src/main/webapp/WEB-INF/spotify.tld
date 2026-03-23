@@ -1,0 +1,19 @@
+<taglib>
+
+
+	<tlib-version>1.0</tlib-version>
+	 <jsp-version>1.2</jsp-version>
+    <short-name>LibreriaSpotify</short-name>
+    <uri>spotifyTags</uri>
+
+
+<tag>
+
+		<name>listar</name> 
+        <tag-class>edu.ucam.tags.ListarCancionesTag</tag-class> 
+        <body-content>empty</body-content>
+</tag>
+
+
+
+</taglib>
