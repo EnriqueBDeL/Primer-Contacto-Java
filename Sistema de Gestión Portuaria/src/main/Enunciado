@@ -1,0 +1,79 @@
+=============================================================================
+EXAMEN DE PRÁCTICA: SISTEMA DE GESTIÓN PORTUARIA (BARCOS)
+=============================================================================
+
+-----------------------------------------------------------------------------
+ANEXO: CÓDIGO AUTOGENERADO (PLANTILLAS)
+-----------------------------------------------------------------------------
+1. Plantilla Servlet
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Hashtable; 
+
+@WebServlet("/RutaDelServlet")
+public class NombreServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    public NombreServlet() { super(); }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { doGet(request, response); }
+}
+
+2. Plantilla Listener
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.annotation.WebListener;
+import java.util.Hashtable; 
+
+@WebListener
+public class NombreListener implements ServletContextListener {
+    public NombreListener() {}
+    public void contextInitialized(ServletContextEvent sce) { }
+    public void contextDestroyed(ServletContextEvent sce) { }
+}
+
+3. Plantilla Custom Tag
+import java.io.IOException;
+import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.tagext.BodyTagSupport;
+import java.util.Hashtable;
+
+public class NombreTag extends BodyTagSupport {
+    private static final long serialVersionUID = 1L;
+    @Override
+    public int doStartTag() throws JspException { return SKIP_BODY; }
+    public int doEndTag() throws JspException { return EVAL_PAGE; }
+}
+
+-----------------------------------------------------------------------------
+ENUNCIADO DEL EJERCICIO
+-----------------------------------------------------------------------------
+Se requiere desarrollar una aplicación web en Java para gestionar el atraque 
+de barcos en un puerto comercial. Se requiere obligatoriamente el uso de una 
+Custom Tag para listar los barcos.
+
+1. LA CLASE DE DOMINIO (Barco.java)
+Atributos: matricula (String, clave), nombre (String), eslora (int), 
+enPuerto (boolean, por defecto true).
+
+2. INICIALIZACIÓN (InicializarPuertoListener.java)
+Crea el Hashtable de Barcos en el contexto con el nombre "REGISTRO_PUERTO" 
+e inserta al menos dos barcos.
+
+3. LÓGICA DE NEGOCIO (Servlets)
+- ServletAltaBarco: Recibe matricula, nombre y eslora. Añade el barco al 
+  Hashtable si no existe previamente. Redirige a index.jsp.
+- ServletBorrarBarco: Recibe la matricula y elimina el barco. Redirige a index.jsp.
+- ServletCambiarEstado: Recibe la matricula y alterna el estado enPuerto 
+  (de true a false o viceversa). Redirige a index.jsp.
+
+4. ETIQUETA PERSONALIZADA (ListarBarcosTag.java y mipuerto.tld)
+- Crea la clase que herede de BodyTagSupport.
+- Recupera el Hashtable del contexto.
+- Imprime (pageContext.getOut().println) los datos de cada barco.
+- Imprime dos enlaces HTML (<a>) para "Borrar" y "Zarpar/Atracar", 
+  pasando la matricula por parámetro a los servlets correspondientes.
+- Escribe el bloque <tag> del archivo .tld.
