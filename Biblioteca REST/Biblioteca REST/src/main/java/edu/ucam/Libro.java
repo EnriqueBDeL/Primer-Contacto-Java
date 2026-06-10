@@ -1,0 +1,54 @@
+package edu.ucam;
+
+public class Libro {
+
+	private String isbn;
+	private String titulo;
+	private int paginas;
+	
+	public Libro() {
+		
+	}
+	
+	
+	public Libro(String isbn, String titulo, int paginas) {
+		super();
+		this.isbn = isbn;
+		this.titulo = titulo;
+		this.paginas = paginas;
+	}
+
+
+	public String getIsbn() {
+		return isbn;
+	}
+
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+
+	public int getPaginas() {
+		return paginas;
+	}
+
+
+	public void setPaginas(int paginas) {
+		this.paginas = paginas;
+	}
+	
+	
+	
+	
+}
